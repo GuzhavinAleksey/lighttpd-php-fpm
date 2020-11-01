@@ -89,4 +89,3 @@ VOLUME /etc/lighttpd
 
 
 CMD ["php-fpm"]
-CMD ["start.sh"]
