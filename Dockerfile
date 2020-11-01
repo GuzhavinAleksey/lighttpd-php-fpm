@@ -88,4 +88,4 @@ VOLUME /var/www/localhost
 VOLUME /etc/lighttpd
 
 
-CMD ["php-fpm"]
+CMD ["start.sh", "php-fpm"]
