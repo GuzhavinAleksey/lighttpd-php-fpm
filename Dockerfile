@@ -11,14 +11,10 @@ RUN apk add --no-cache \
 		sed \
 # Ghostscript is required for rendering PDF previews
 		ghostscript \
-
 		lighttpd=${LIGHTTPD_VERSION} \
-
-	  lighttpd-mod_auth \
-
+	    lighttpd-mod_auth \
 # Alpine package for "imagemagick" contains ~120 .so files, see: https://github.com/docker-library/wordpress/pull/497
 		imagemagick
-
 # install the PHP extensions we need (https://make.wordpress.org/hosting/handbook/handbook/server-environment/#php-extensions)
 RUN set -ex; \
 	\
@@ -79,13 +75,12 @@ RUN { \
 
 
 COPY etc/lighttpd/* /etc/lighttpd/
-COPY start.sh /usr/local/bin/
+
 
 EXPOSE 80
 
 VOLUME /var/www/html
-VOLUME /var/www/localhost
 VOLUME /etc/lighttpd
 
 
-CMD ["start.sh", "php-fpm"]
+CMD ["php-fpm"]
