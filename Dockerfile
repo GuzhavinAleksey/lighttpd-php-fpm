@@ -75,12 +75,16 @@ RUN { \
 
 
 COPY etc/lighttpd/* /etc/lighttpd/
+COPY start.sh /usr/local/bin/
 
+#RUN set -ex; \
+#    chmod a+w /dev/pts/0
 
 EXPOSE 80
+
+RUN ["chmod", "+x", "/usr/local/bin/start.sh"]
 
 VOLUME /var/www/html
 VOLUME /etc/lighttpd
 
-
-CMD ["php-fpm"]
+CMD ["start.sh", "php-fpm"]
