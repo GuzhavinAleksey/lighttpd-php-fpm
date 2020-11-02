@@ -87,4 +87,4 @@ RUN ["chmod", "+x", "/usr/local/bin/start.sh"]
 VOLUME /var/www/html
 VOLUME /etc/lighttpd
 
-CMD ["start.sh", "php-fpm"]
+CMD ["start.sh"]
