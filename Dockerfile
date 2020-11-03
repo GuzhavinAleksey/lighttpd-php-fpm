@@ -25,6 +25,7 @@ RUN set -ex; \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libzip-dev \
+		libxslt-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-freetype --with-jpeg; \
@@ -32,11 +33,18 @@ RUN set -ex; \
 		bcmath \
 		exif \
 		gd \
+		xmlrpc \
+		soap \
+		intl \
+		xsl \
 		mysqli \
+		opcache \
 		zip \
 	; \
 	pecl install imagick-3.4.4; \
+	pecl install redis; \
 	docker-php-ext-enable imagick; \
+	docker-php-ext-enable redis; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
