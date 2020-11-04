@@ -13,6 +13,7 @@ RUN apk add --no-cache \
 		ghostscript \
 		lighttpd=${LIGHTTPD_VERSION} \
 	    lighttpd-mod_auth \
+	    icu-dev \
 # Alpine package for "imagemagick" contains ~120 .so files, see: https://github.com/docker-library/wordpress/pull/497
 		imagemagick
 # install the PHP extensions we need (https://make.wordpress.org/hosting/handbook/handbook/server-environment/#php-extensions)
@@ -25,6 +26,7 @@ RUN set -ex; \
 		libjpeg-turbo-dev \
 		libpng-dev \
 		libzip-dev \
+		libxslt-dev \
 	; \
 	\
 	docker-php-ext-configure gd --with-freetype --with-jpeg; \
@@ -32,11 +34,18 @@ RUN set -ex; \
 		bcmath \
 		exif \
 		gd \
+		xmlrpc \
+		soap \
+		intl \
+		xsl \
 		mysqli \
+		opcache \
 		zip \
 	; \
 	pecl install imagick-3.4.4; \
+	pecl install redis; \
 	docker-php-ext-enable imagick; \
+	docker-php-ext-enable redis; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
@@ -75,12 +84,7 @@ RUN { \
 
 COPY etc/lighttpd/* /etc/lighttpd/
 
-#RUN set -ex; \
-#    chmod a+w /dev/pts/0
-
 EXPOSE 80
-
-#RUN ["chmod", "+x", "/usr/local/bin/start.sh"]
 
 VOLUME /var/www/html
 VOLUME /etc/lighttpd
@@ -89,3 +93,4 @@ COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
+
