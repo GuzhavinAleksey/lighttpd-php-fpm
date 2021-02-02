@@ -1,7 +1,7 @@
 FROM php:7.4-fpm-alpine
 
 
-ENV LIGHTTPD_VERSION=1.4.55-r1
+ENV LIGHTTPD_VERSION=1.4.57-r0
 
 # persistent dependencies
 RUN apk add --no-cache \
