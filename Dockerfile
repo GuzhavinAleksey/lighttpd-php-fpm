@@ -1,8 +1,6 @@
 FROM php:7.4-fpm-alpine
 
 
-ENV LIGHTTPD_VERSION=1.4.57-r0
-
 # persistent dependencies
 RUN apk add --no-cache \
 # in theory, docker-entrypoint.sh is POSIX-compliant, but priority is a working, consistent image
@@ -11,7 +9,7 @@ RUN apk add --no-cache \
 		sed \
 # Ghostscript is required for rendering PDF previews
 		ghostscript \
-		lighttpd=${LIGHTTPD_VERSION} \
+		lighttpd \
 	    lighttpd-mod_auth \
 	    icu-dev \
 # Alpine package for "imagemagick" contains ~120 .so files, see: https://github.com/docker-library/wordpress/pull/497
